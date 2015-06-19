@@ -1,0 +1,27 @@
+yeoman:
+  build: ./yeoman
+  working_dir: /app
+  volumes:
+    - ./yeoman:/yeoman
+  expose:
+    - "8000"
+  ports:
+    - "8000:8000"
+  links:
+    - api
+api:
+  build: ./api
+  working_dir: /go/src/api
+  volumes:
+    - ./api:/go/src/api
+  expose:
+    - "8080"
+  ports:
+    - "8080:8080"
+  links:
+    - mongo
+mongo:
+  image: mongo
+  command: mongod --smallfiles
+  volumes:
+    - ./data:/data/db
